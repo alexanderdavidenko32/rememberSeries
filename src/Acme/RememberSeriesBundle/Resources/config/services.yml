@@ -1,0 +1,7 @@
+parameters:
+#    acme_remember_seies.example.class: Acme\RememberSeriesBundle\Example
+
+services:
+#    acme_remember_seies.example:
+#        class: %acme_remember_seies.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

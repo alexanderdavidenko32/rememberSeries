@@ -1,0 +1,11 @@
+_welcome:
+    pattern: /
+    defaults: { _controller: AcmeRememberSeriesBundle:Default:index }
+
+acme_remember_series_homepage:
+    pattern:  /hello
+    defaults: { _controller: AcmeRememberSeriesBundle:Default:index }
+
+acme_remember_series_movie:
+    pattern:  /movie/{name}
+    defaults: { _controller: AcmeRememberSeriesBundle:Default:movie }

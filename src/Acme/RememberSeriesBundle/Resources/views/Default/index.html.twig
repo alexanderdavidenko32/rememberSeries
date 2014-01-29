@@ -1,0 +1,9 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <ul>
+    {% for item in movies %}
+        <li><a href="{{ path('acme_remember_series_movie', { 'name': item.name }) }}">{{item.text}}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}

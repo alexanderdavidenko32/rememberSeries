@@ -1,0 +1,4 @@
+acme_remember_seies:
+    resource: "@AcmeRememberSeriesBundle/Resources/config/routing.yml"
+    prefix:   /
+
