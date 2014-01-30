@@ -1,6 +1,13 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
+    {% if app.user %} 
+        user: {{ app.user }}
+        <a href="{{ path('fos_user_security_logout')}}">logout</a>
+    {% else %}
+        <a href="{{ path('fos_user_security_login')}}">login</a>
+    {% endif %}
+    
     <ul>
     {% for item in movies %}
         <li><a href="{{ path('acme_remember_series_movie', { 'name': item.name }) }}">{{item.text}}</a></li>

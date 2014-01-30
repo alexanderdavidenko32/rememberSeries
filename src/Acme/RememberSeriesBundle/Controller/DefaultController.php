@@ -18,6 +18,18 @@ class DefaultController extends Controller
                 'text' => 'mv2'
             )
         );
+        
+//        $params['user'] = null;
+        
+//        $securityContext = $this->container->get('security.context');
+//        if( $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
+//            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
+////            var_dump($securityContext);die;
+//            $params['user'] = $securityContext;
+//            
+//        }
+//        $user = $this->container->get('fos_user.user_manager')->findUserByUserName('admin');
+//        var_dump($user);die;
 
         return $this->render('AcmeRememberSeriesBundle:Default:index.html.twig', $params);
     }
