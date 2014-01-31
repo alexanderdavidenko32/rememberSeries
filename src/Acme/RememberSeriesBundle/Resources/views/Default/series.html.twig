@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-    <div>Series: {{ series.name }}!</div>
+    <div>Series: <a href="{{ path('acme_remember_series_seasons', { 'series_id': series.id }) }}">{{ series.name }}</a>!</div>
     <div>Description: {{ series.description }}</div>
 {% endblock %}

@@ -21,11 +21,17 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Acme\RememberSeriesBundle\Entity\Series")
+     */
+    private $series;
 
     public function __construct()
     {
         parent::__construct();
-        // your own logic
+        
+        $this->series = new ArrayCollection();
     }
 
     /**
@@ -36,5 +42,12 @@ class User extends BaseUser
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * Get series
+     */
+    public function getSeries() {
+        return $this->series;
     }
 }

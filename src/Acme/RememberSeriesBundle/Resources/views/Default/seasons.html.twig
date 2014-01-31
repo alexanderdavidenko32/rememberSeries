@@ -1,0 +1,10 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    Seasons: 
+    <ul>
+    {% for item in seasons %}
+        <li>{{ item.name }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}

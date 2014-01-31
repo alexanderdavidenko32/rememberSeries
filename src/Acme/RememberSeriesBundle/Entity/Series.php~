@@ -39,14 +39,6 @@ class Series
      * @ORM\OneToMany(targetEntity="Season", mappedBy="series_id")
      */
     private $seasons;
-    
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->seasons = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -102,38 +94,5 @@ class Series
     public function getDescription()
     {
         return $this->description;
-    }
-    
-    /**
-     * Add seasons
-     *
-     * @param \Acme\RememberSeriesBundle\Entity\Season $seasons
-     * @return Series
-     */
-    public function addSeason(\Acme\RememberSeriesBundle\Entity\Season $seasons)
-    {
-        $this->seasons[] = $seasons;
-    
-        return $this;
-    }
-
-    /**
-     * Remove seasons
-     *
-     * @param \Acme\RememberSeriesBundle\Entity\Season $seasons
-     */
-    public function removeSeason(\Acme\RememberSeriesBundle\Entity\Season $seasons)
-    {
-        $this->seasons->removeElement($seasons);
-    }
-
-    /**
-     * Get seasons
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getSeasons()
-    {
-        return $this->seasons;
     }
 }
