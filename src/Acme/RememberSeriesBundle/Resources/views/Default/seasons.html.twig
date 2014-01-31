@@ -1,10 +1,10 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-    Seasons: 
+    Seasons:
     <ul>
     {% for item in seasons %}
-        <li>{{ item.name }}</li>
+        <li><a href="{{ path('acme_remember_series_season', { 'season_id': item.id }) }}">{{ item.name }}</a></li>
     {% endfor %}
     </ul>
 {% endblock %}

@@ -20,12 +20,12 @@ class Season
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
+
     /**
      * @var integer
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="Series", inversedBy="seasons")
-     * @ORM\JoinColumn(name="season_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="series_id", referencedColumnName="id")
      */
     private $series_id;
 
@@ -43,6 +43,13 @@ class Season
      */
     private $name;
 
+    /**
+     * @var string
+     * 
+     * @ORM\Column(name="description", type="text")
+     */
+    private $description;
+
     public function __construct()
     {
         $this->series_id = new ArrayCollection();
@@ -51,7 +58,7 @@ class Season
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -67,14 +74,14 @@ class Season
     public function setNumber($number)
     {
         $this->number = $number;
-    
+
         return $this;
     }
 
     /**
      * Get number
      *
-     * @return integer 
+     * @return integer
      */
     public function getNumber()
     {
@@ -90,14 +97,14 @@ class Season
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -113,17 +120,40 @@ class Season
     public function setSeriesId($seriesId)
     {
         $this->series_id = $seriesId;
-    
+
         return $this;
     }
 
     /**
      * Get series_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getSeriesId()
     {
         return $this->series_id;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Season
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }
