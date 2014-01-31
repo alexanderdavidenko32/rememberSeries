@@ -45,10 +45,15 @@ class Season
 
     /**
      * @var string
-     * 
+     *
      * @ORM\Column(name="description", type="text")
      */
     private $description;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Episode", mappedBy="season_id")
+     */
+    private $episodes;
 
     public function __construct()
     {
@@ -155,5 +160,38 @@ class Season
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Add episodes
+     *
+     * @param \Acme\RememberSeriesBundle\Entity\Episode $episodes
+     * @return Season
+     */
+    public function addEpisode(\Acme\RememberSeriesBundle\Entity\Episode $episodes)
+    {
+        $this->episodes[] = $episodes;
+    
+        return $this;
+    }
+
+    /**
+     * Remove episodes
+     *
+     * @param \Acme\RememberSeriesBundle\Entity\Episode $episodes
+     */
+    public function removeEpisode(\Acme\RememberSeriesBundle\Entity\Episode $episodes)
+    {
+        $this->episodes->removeElement($episodes);
+    }
+
+    /**
+     * Get episodes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEpisodes()
+    {
+        return $this->episodes;
     }
 }

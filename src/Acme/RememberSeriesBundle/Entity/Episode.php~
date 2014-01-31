@@ -5,12 +5,12 @@ namespace Acme\RememberSeriesBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Season
+ * Episode
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Acme\RememberSeriesBundle\Entity\SeasonRepository")
+ * @ORM\Entity(repositoryClass="Acme\RememberSeriesBundle\Entity\EpisodeRepository")
  */
-class Season
+class Episode
 {
     /**
      * @var integer
@@ -24,17 +24,10 @@ class Season
     /**
      * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Series", inversedBy="seasons")
-     * @ORM\JoinColumn(name="series_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Season", inversedBy="episodes")
+     * @ORM\JoinColumn(name="season_id", referencedColumnName="id")
      */
-    private $series_id;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="number", type="integer")
-     */
-    private $number;
+    private $season_id;
 
     /**
      * @var string
@@ -50,15 +43,6 @@ class Season
      */
     private $description;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Episode", mappedBy="season_id")
-     */
-    private $episodes;
-
-    public function __construct()
-    {
-        $this->series_id = new ArrayCollection();
-    }
 
     /**
      * Get id
@@ -71,33 +55,10 @@ class Season
     }
 
     /**
-     * Set number
-     *
-     * @param integer $number
-     * @return Season
-     */
-    public function setNumber($number)
-    {
-        $this->number = $number;
-
-        return $this;
-    }
-
-    /**
-     * Get number
-     *
-     * @return integer
-     */
-    public function getNumber()
-    {
-        return $this->number;
-    }
-
-    /**
      * Set name
      *
      * @param string $name
-     * @return Season
+     * @return Episode
      */
     public function setName($name)
     {
@@ -117,33 +78,10 @@ class Season
     }
 
     /**
-     * Set series_id
-     *
-     * @param integer $seriesId
-     * @return Season
-     */
-    public function setSeriesId($seriesId)
-    {
-        $this->series_id = $seriesId;
-
-        return $this;
-    }
-
-    /**
-     * Get series_id
-     *
-     * @return integer
-     */
-    public function getSeriesId()
-    {
-        return $this->series_id;
-    }
-
-    /**
      * Set description
      *
      * @param string $description
-     * @return Season
+     * @return Episode
      */
     public function setDescription($description)
     {

@@ -1,13 +1,6 @@
-{% extends '::base.html.twig' %}
+{% extends 'AcmeRememberSeriesBundle::base.html.twig' %}
 
 {% block body %}
-    {% if app.user %} 
-        user: {{ app.user }}
-        <a href="{{ path('fos_user_security_logout')}}">logout</a>
-    {% else %}
-        <a href="{{ path('fos_user_security_login')}}">login</a>
-    {% endif %}
-    
     <ul>
     {% for item in series %}
         <li><a href="{{ path('acme_remember_series_single_page', { 'series_id': item.id }) }}">{{ item.name }}</a></li>
