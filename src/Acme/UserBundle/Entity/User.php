@@ -27,11 +27,11 @@ class User extends BaseUser
         parent::__construct();
         // your own logic
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
