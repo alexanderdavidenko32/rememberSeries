@@ -8,12 +8,12 @@ acme_remember_series_homepage:
 
 acme_remember_series_single_page:
     pattern:  /series/{series_id}
-    defaults: { _controller: AcmeRememberSeriesBundle:Default:series }
+    defaults: { _controller: AcmeRememberSeriesBundle:Series:series }
 
 acme_remember_series_season:
     pattern: /season/{season_id}
-    defaults: { _controller: AcmeRememberSeriesBundle:Default:season }
+    defaults: { _controller: AcmeRememberSeriesBundle:Season:season }
 
 acme_remember_series_episode:
     pattern: /episode/{episode_id}
-    defaults: { _controller: AcmeRememberSeriesBundle:Default:episode }
+    defaults: { _controller: AcmeRememberSeriesBundle:Episode:episode }
