@@ -9,21 +9,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class DefaultController extends Controller
 {
     public function indexAction() {
-        $params = array();
 
         $securityContext = $this->container->get('security.context');
 
 //      authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-        if( $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
-            $series = $securityContext->getToken()->getUser()->getSeries();
+        if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $response = $this->forward('AcmeRememberSeriesBundle:Series:seriesList');
         } else {
-            $seriesRepository = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:Series');
-            $seriesQuery = $seriesRepository->createQueryBuilder('s')->getQuery();
-            $series = $seriesQuery->getResult();
+            $response = $this->forward('AcmeRememberSeriesBundle:Default:welcome');
         }
 
-        $params['series'] = $series;
-
-        return $this->render('AcmeRememberSeriesBundle:Default:index.html.twig', $params);
+        return $response;
+    }
+    
+    public function welcomeAction() {
+        return $this->render('AcmeRememberSeriesBundle:Default:index.html.twig');
     }
 }

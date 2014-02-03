@@ -6,9 +6,21 @@ acme_remember_series_homepage:
     pattern:  /hello
     defaults: { _controller: AcmeRememberSeriesBundle:Default:index }
 
+acme_remember_series_list_all:
+    pattern:  /series-list-all
+    defaults: { _controller: AcmeRememberSeriesBundle:Series:seriesListAll }
+    
 acme_remember_series_single_page:
     pattern:  /series/{series_id}
     defaults: { _controller: AcmeRememberSeriesBundle:Series:series }
+    
+acme_remember_series_add:
+    pattern:  /series-add/{series_id}
+    defaults: { _controller: AcmeRememberSeriesBundle:Series:seriesAdd }
+    
+acme_remember_series_remove:
+    pattern:  /series-remove/{series_id}
+    defaults: { _controller: AcmeRememberSeriesBundle:Series:seriesRemove }    
 
 acme_remember_series_season:
     pattern: /season/{season_id}

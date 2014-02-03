@@ -50,4 +50,27 @@ class User extends BaseUser
     public function getSeries() {
         return $this->series;
     }
+
+    /**
+     * Add series
+     *
+     * @param \Acme\RememberSeriesBundle\Entity\Series $series
+     * @return User
+     */
+    public function addSeries(\Acme\RememberSeriesBundle\Entity\Series $series)
+    {
+        $this->series[] = $series;
+    
+        return $this;
+    }
+
+    /**
+     * Remove series
+     *
+     * @param \Acme\RememberSeriesBundle\Entity\Series $series
+     */
+    public function removeSeries(\Acme\RememberSeriesBundle\Entity\Series $series)
+    {
+        $this->series->removeElement($series);
+    }
 }
