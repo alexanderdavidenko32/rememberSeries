@@ -21,10 +21,10 @@ class Series
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
+
     /**
      * @var boolean
-     * 
+     *
      * @ORM\Column(name="is_custom", type="boolean")
      */
     private $isCustom = true;
@@ -40,26 +40,27 @@ class Series
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
-    
+
     /**
-     * @ORM\ManyToMany(targetEntity="Acme\UserBundle\Entity\User")
+     * @ORM\ManyToMany(targetEntity="Acme\UserBundle\Entity\User", mappedBy="series")
      */
-    private $user;
-    
+    private $users;
+
     /**
      * @ORM\OneToMany(targetEntity="Season", mappedBy="series_id")
      */
     private $seasons;
-    
+
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->seasons = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -117,7 +118,7 @@ class Series
     {
         return $this->description;
     }
-    
+
     /**
      * Add seasons
      *
@@ -127,7 +128,7 @@ class Series
     public function addSeason(\Acme\RememberSeriesBundle\Entity\Season $seasons)
     {
         $this->seasons[] = $seasons;
-    
+
         return $this;
     }
 
@@ -144,7 +145,7 @@ class Series
     /**
      * Get seasons
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSeasons()
     {
@@ -160,14 +161,14 @@ class Series
     public function setIsCustom($isCustom)
     {
         $this->isCustom = $isCustom;
-    
+
         return $this;
     }
 
     /**
      * Get isCustom
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsCustom()
     {
@@ -182,8 +183,9 @@ class Series
      */
     public function addUser(\Acme\UserBundle\Entity\User $user)
     {
-        $this->user[] = $user;
-    
+        $user->addSeries($this);
+        $this->users[] = $user;
+
         return $this;
     }
 
@@ -194,16 +196,16 @@ class Series
      */
     public function removeUser(\Acme\UserBundle\Entity\User $user)
     {
-        $this->user->removeElement($user);
+        $this->users->removeElement($user);
     }
 
     /**
      * Get user
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getUser()
+    public function getUsers()
     {
-        return $this->user;
+        return $this->users;
     }
 }

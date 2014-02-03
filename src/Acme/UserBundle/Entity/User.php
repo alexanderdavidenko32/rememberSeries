@@ -22,9 +22,10 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    
+
     /**
-     * @ORM\ManyToMany(targetEntity="Acme\RememberSeriesBundle\Entity\Series")
+     * @ORM\ManyToMany(targetEntity="Acme\RememberSeriesBundle\Entity\Series", inversedBy="users")
+     * @ORM\JoinTable(name="user_series")
      * @Assert\Type(type="Acme\RememberSeriesBundle\Entity\Series")
      */
     private $series;
@@ -32,7 +33,7 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        
+
         $this->series = new ArrayCollection();
     }
 
@@ -45,7 +46,7 @@ class User extends BaseUser
     {
         return $this->id;
     }
-    
+
     /**
      * Get series
      */
@@ -62,7 +63,7 @@ class User extends BaseUser
     public function addSeries(\Acme\RememberSeriesBundle\Entity\Series $series)
     {
         $this->series[] = $series;
-    
+
         return $this;
     }
 

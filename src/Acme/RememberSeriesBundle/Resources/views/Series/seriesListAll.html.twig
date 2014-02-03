@@ -1,7 +1,8 @@
 {% extends 'AcmeRememberSeriesBundle:Default:index.html.twig' %}
 
+{% block title %}{{ title }}{% endblock %}
+
 {% block body %}
-    {{ form(form) }}
     <ul>
     {% for item in series %}
         <li>

@@ -1,5 +1,7 @@
 {% extends 'AcmeRememberSeriesBundle:Default:index.html.twig' %}
 
+{% block title %}{{ title }}{% endblock %}
+
 {% block body %}
     <div>Episode: {{ episode.name }}!</div>
     <div>Description: {{ episode.description }}</div>

@@ -46,7 +46,7 @@ class Season
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
@@ -171,7 +171,7 @@ class Season
     public function addEpisode(\Acme\RememberSeriesBundle\Entity\Episode $episodes)
     {
         $this->episodes[] = $episodes;
-    
+
         return $this;
     }
 
@@ -188,7 +188,7 @@ class Season
     /**
      * Get episodes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEpisodes()
     {

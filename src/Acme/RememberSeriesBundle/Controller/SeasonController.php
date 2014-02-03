@@ -20,6 +20,7 @@ class SeasonController extends Controller {
                 ->find($season_id);
         $episodes = $season->getEpisodes();
 
+        $params['title'] = 'season: ' . $season->getName();
         $params['season'] = $season;
         $params['episodes'] = $episodes;
 

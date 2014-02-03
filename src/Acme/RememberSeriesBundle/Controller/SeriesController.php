@@ -34,6 +34,10 @@ class SeriesController extends Controller {
 
         $series = $securityContext->getToken()->getUser()->getSeries();
         $params['series'] = $series;
+
+        $form = $this->createForm(new SeriesType(), new Series());
+        $params['form'] = $form->createView();
+
         $response = $this->render('AcmeRememberSeriesBundle:Series:seriesList.html.twig', $params);
 
         return $response;
@@ -53,13 +57,8 @@ class SeriesController extends Controller {
                 ->getQuery()
                 ->getResult();
 
+        $params['title'] = 'all series';
         $params['series'] = $series;
-
-        $form = $this->createForm(new SeriesType(), new Series(), array(
-            'action' => $this->generateUrl('acme_remember_series_create'),
-        ));
-
-        $params['form'] = $form->createView();
 
         return $this->render('AcmeRememberSeriesBundle:Series:seriesListAll.html.twig', $params);
     }
@@ -75,7 +74,7 @@ class SeriesController extends Controller {
 
         $user->addSeries($series);
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
 
@@ -84,28 +83,26 @@ class SeriesController extends Controller {
 
     public function seriesCreateAction(Request $request) {
 
-
-        $em = $this->getDoctrine()->getEntityManager();
-
         $form = $this->createForm(new SeriesType(), new Series());
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $series = $form->getData();
-            
+
+
             $securityContext = $this->container->get('security.context');
 
             $user = $securityContext->getToken()->getUser();
-            
+
             $series->addUser($user);
 
+            $em = $this->getDoctrine()->getManager();
             $em->persist($series);
-
             $em->flush();
         }
 
-        return $this->forward('AcmeRememberSeriesBundle:Series:seriesListAll');
+        return $this->forward('AcmeRememberSeriesBundle:Series:seriesList');
     }
 
     public function seriesRemoveAction($series_id) {
@@ -119,7 +116,7 @@ class SeriesController extends Controller {
 
         $user->removeSeries($series);
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
 

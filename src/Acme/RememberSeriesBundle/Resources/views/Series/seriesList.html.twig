@@ -1,9 +1,17 @@
 {% extends 'AcmeRememberSeriesBundle:Default:index.html.twig' %}
 
+
+
 {% block body %}
-    <div>
-        <a href="{{ path('acme_remember_series_list_all') }}">all series</a>
-    </div>
+    <form action="{{ path('acme_remember_series_create') }}" method="post" {{ form_enctype(form) }}>
+
+        {{ form_errors(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form._token) }}
+
+        <input type="submit" value="add" />
+    </form>
+
     <ul>
     {% for item in series %}
         <li>
