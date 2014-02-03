@@ -13,19 +13,35 @@ acme_remember_series_list_all:
 acme_remember_series_single_page:
     pattern:  /series/{series_id}
     defaults: { _controller: AcmeRememberSeriesBundle:Series:series }
+    requirements:
+        series_id: \d+
     
 acme_remember_series_add:
-    pattern:  /series-add/{series_id}
+    pattern:  /series/add/{series_id}
     defaults: { _controller: AcmeRememberSeriesBundle:Series:seriesAdd }
+    requirements:
+        series_id: \d+
+    
+acme_remember_series_create:
+    pattern:  /series/create
+    defaults: { _controller: AcmeRememberSeriesBundle:Series:seriesCreate }
+    requirements:
+        _method:  POST
     
 acme_remember_series_remove:
-    pattern:  /series-remove/{series_id}
-    defaults: { _controller: AcmeRememberSeriesBundle:Series:seriesRemove }    
+    pattern:  /series/remove/{series_id}
+    defaults: { _controller: AcmeRememberSeriesBundle:Series:seriesRemove }
+    requirements:
+        series_id: \d+
 
 acme_remember_series_season:
     pattern: /season/{season_id}
     defaults: { _controller: AcmeRememberSeriesBundle:Season:season }
+    requirements:
+        series_id: \d+
 
 acme_remember_series_episode:
     pattern: /episode/{episode_id}
     defaults: { _controller: AcmeRememberSeriesBundle:Episode:episode }
+    requirements:
+        series_id: \d+

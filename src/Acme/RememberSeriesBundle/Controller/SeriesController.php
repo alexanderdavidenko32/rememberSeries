@@ -4,6 +4,8 @@ namespace Acme\RememberSeriesBundle\Controller;
 
 use Acme\RememberSeriesBundle\Entity\Series;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Acme\RememberSeriesBundle\Form\SeriesType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Description of SeriesController
@@ -41,18 +43,24 @@ class SeriesController extends Controller {
         $params = array();
 
         $securityContext = $this->container->get('security.context');
-        
+
         $userSeries = $securityContext->getToken()->getUser()->getSeries()->toArray();
 
         $seriesRepository = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:Series');
         $series = $seriesRepository->createQueryBuilder('s')
                 ->where('s.id NOT IN (:ids)')
-                ->setParameter('ids',  $userSeries)
+                ->setParameter('ids', $userSeries)
                 ->getQuery()
                 ->getResult();
 
-
         $params['series'] = $series;
+
+        $form = $this->createForm(new SeriesType(), new Series(), array(
+            'action' => $this->generateUrl('acme_remember_series_create'),
+        ));
+
+        $params['form'] = $form->createView();
+
         return $this->render('AcmeRememberSeriesBundle:Series:seriesListAll.html.twig', $params);
     }
 
@@ -62,29 +70,55 @@ class SeriesController extends Controller {
                 ->find($series_id);
 
         $securityContext = $this->container->get('security.context');
-        
+
         $user = $securityContext->getToken()->getUser();
 
         $user->addSeries($series);
-        
+
         $em = $this->getDoctrine()->getEntityManager();
         $em->persist($user);
         $em->flush();
 
         return $this->redirect($this->generateUrl('acme_remember_series_homepage'));
     }
-    
+
+    public function seriesCreateAction(Request $request) {
+
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $form = $this->createForm(new SeriesType(), new Series());
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $series = $form->getData();
+            
+            $securityContext = $this->container->get('security.context');
+
+            $user = $securityContext->getToken()->getUser();
+            
+            $series->addUser($user);
+
+            $em->persist($series);
+
+            $em->flush();
+        }
+
+        return $this->forward('AcmeRememberSeriesBundle:Series:seriesListAll');
+    }
+
     public function seriesRemoveAction($series_id) {
 
         $series = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:Series')
                 ->find($series_id);
 
         $securityContext = $this->container->get('security.context');
-        
+
         $user = $securityContext->getToken()->getUser();
 
         $user->removeSeries($series);
-        
+
         $em = $this->getDoctrine()->getEntityManager();
         $em->persist($user);
         $em->flush();

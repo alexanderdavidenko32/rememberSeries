@@ -3,6 +3,7 @@
 namespace Acme\RememberSeriesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Series
@@ -20,11 +21,19 @@ class Series
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+     * @var boolean
+     * 
+     * @ORM\Column(name="is_custom", type="boolean")
+     */
+    private $isCustom = true;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -34,6 +43,11 @@ class Series
      * @ORM\Column(name="description", type="text")
      */
     private $description;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Acme\UserBundle\Entity\User")
+     */
+    private $user;
     
     /**
      * @ORM\OneToMany(targetEntity="Season", mappedBy="series_id")
@@ -135,5 +149,61 @@ class Series
     public function getSeasons()
     {
         return $this->seasons;
+    }
+
+    /**
+     * Set isCustom
+     *
+     * @param boolean $isCustom
+     * @return Series
+     */
+    public function setIsCustom($isCustom)
+    {
+        $this->isCustom = $isCustom;
+    
+        return $this;
+    }
+
+    /**
+     * Get isCustom
+     *
+     * @return boolean 
+     */
+    public function getIsCustom()
+    {
+        return $this->isCustom;
+    }
+
+    /**
+     * Add user
+     *
+     * @param \Acme\UserBundle\Entity\User $user
+     * @return Series
+     */
+    public function addUser(\Acme\UserBundle\Entity\User $user)
+    {
+        $this->user[] = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \Acme\UserBundle\Entity\User $user
+     */
+    public function removeUser(\Acme\UserBundle\Entity\User $user)
+    {
+        $this->user->removeElement($user);
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
