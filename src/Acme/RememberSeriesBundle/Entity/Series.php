@@ -25,9 +25,10 @@ class Series
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_custom", type="boolean")
+     * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User", inversedBy="createdSeries")
+     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
      */
-    private $isCustom = true;
+    private $ownerId = true;
 
     /**
      * @var string
@@ -50,7 +51,7 @@ class Series
     private $users;
 
     /**
-     * @ORM\OneToMany(targetEntity="Season", mappedBy="series_id")
+     * @ORM\OneToMany(targetEntity="Season", mappedBy="seriesId")
      */
     private $seasons;
 
@@ -61,6 +62,7 @@ class Series
     {
         $this->seasons = new \Doctrine\Common\Collections\ArrayCollection();
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ownerId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -153,29 +155,6 @@ class Series
     }
 
     /**
-     * Set isCustom
-     *
-     * @param boolean $isCustom
-     * @return Series
-     */
-    public function setIsCustom($isCustom)
-    {
-        $this->isCustom = $isCustom;
-
-        return $this;
-    }
-
-    /**
-     * Get isCustom
-     *
-     * @return boolean
-     */
-    public function getIsCustom()
-    {
-        return $this->isCustom;
-    }
-
-    /**
      * Add user
      *
      * @param \Acme\UserBundle\Entity\User $user
@@ -207,5 +186,28 @@ class Series
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Set ownerId
+     *
+     * @param \Acme\UserBundle\Entity\User $ownerId
+     * @return Series
+     */
+    public function setOwnerId(\Acme\UserBundle\Entity\User $ownerId = null)
+    {
+        $this->ownerId = $ownerId;
+    
+        return $this;
+    }
+
+    /**
+     * Get ownerId
+     *
+     * @return \Acme\UserBundle\Entity\User 
+     */
+    public function getOwnerId()
+    {
+        return $this->ownerId;
     }
 }

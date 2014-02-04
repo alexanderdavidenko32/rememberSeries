@@ -2,10 +2,6 @@ _welcome:
     pattern: /
     defaults: { _controller: AcmeRememberSeriesBundle:Default:index }
 
-acme_remember_series_homepage:
-    pattern:  /hello
-    defaults: { _controller: AcmeRememberSeriesBundle:Default:index }
-
 acme_remember_series_list_all:
     pattern:  /series-list-all
     defaults: { _controller: AcmeRememberSeriesBundle:Series:seriesListAll }

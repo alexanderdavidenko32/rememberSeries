@@ -27,7 +27,7 @@ class Season
      * @ORM\ManyToOne(targetEntity="Series", inversedBy="seasons")
      * @ORM\JoinColumn(name="series_id", referencedColumnName="id")
      */
-    private $series_id;
+    private $seriesId;
 
     /**
      * @var integer
@@ -57,7 +57,7 @@ class Season
 
     public function __construct()
     {
-        $this->series_id = new ArrayCollection();
+        $this->seriesId = new ArrayCollection();
     }
 
     /**

@@ -29,12 +29,18 @@ class User extends BaseUser
      * @Assert\Type(type="Acme\RememberSeriesBundle\Entity\Series")
      */
     private $series;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Acme\RememberSeriesBundle\Entity\Series", mappedBy="ownerId")
+     */
+    private $createdSeries;
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->series = new ArrayCollection();
+        $this->series = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->createdSeries = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -75,5 +81,61 @@ class User extends BaseUser
     public function removeSeries(\Acme\RememberSeriesBundle\Entity\Series $series)
     {
         $this->series->removeElement($series);
+    }
+
+    /**
+     * Add series
+     *
+     * @param \Acme\RememberSeriesBundle\Entity\Series $series
+     * @return User
+     */
+    public function addSerie(\Acme\RememberSeriesBundle\Entity\Series $series)
+    {
+        $this->series[] = $series;
+    
+        return $this;
+    }
+
+    /**
+     * Remove series
+     *
+     * @param \Acme\RememberSeriesBundle\Entity\Series $series
+     */
+    public function removeSerie(\Acme\RememberSeriesBundle\Entity\Series $series)
+    {
+        $this->series->removeElement($series);
+    }
+
+    /**
+     * Add createdSeries
+     *
+     * @param \Acme\RememberSeriesBundle\Entity\Series $createdSeries
+     * @return User
+     */
+    public function addCreatedSeries(\Acme\RememberSeriesBundle\Entity\Series $createdSeries)
+    {
+        $this->createdSeries[] = $createdSeries;
+    
+        return $this;
+    }
+
+    /**
+     * Remove createdSeries
+     *
+     * @param \Acme\RememberSeriesBundle\Entity\Series $createdSeries
+     */
+    public function removeCreatedSeries(\Acme\RememberSeriesBundle\Entity\Series $createdSeries)
+    {
+        $this->createdSeries->removeElement($createdSeries);
+    }
+
+    /**
+     * Get createdSeries
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCreatedSeries()
+    {
+        return $this->createdSeries;
     }
 }

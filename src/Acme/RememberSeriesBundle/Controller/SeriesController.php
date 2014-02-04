@@ -47,15 +47,21 @@ class SeriesController extends Controller {
         $params = array();
 
         $securityContext = $this->container->get('security.context');
+        $user = $securityContext->getToken()->getUser();
 
-        $userSeries = $securityContext->getToken()->getUser()->getSeries()->toArray();
+        $userSeries = $user->getSeries()->toArray();
 
         $seriesRepository = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:Series');
-        $series = $seriesRepository->createQueryBuilder('s')
-                ->where('s.id NOT IN (:ids)')
-                ->setParameter('ids', $userSeries)
-                ->getQuery()
-                ->getResult();
+        $seriesQuery = $seriesRepository->createQueryBuilder('s')
+                ->where('s.ownerId = 1 OR s.ownerId = :this_user')
+                ->setParameter('this_user', $user);
+
+        if (count($userSeries)) {
+            $seriesQuery->andWhere('s.id NOT IN (:ids)')
+                    ->setParameter('ids', $userSeries);
+        }
+        
+        $series = $seriesQuery->getQuery()->getResult();
 
         $params['title'] = 'all series';
         $params['series'] = $series;
@@ -96,6 +102,7 @@ class SeriesController extends Controller {
             $user = $securityContext->getToken()->getUser();
 
             $series->addUser($user);
+            $series->setOwnerId($user);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($series);
