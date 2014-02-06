@@ -24,8 +24,7 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Acme\RememberSeriesBundle\Entity\Series", inversedBy="users")
-     * @ORM\JoinTable(name="user_series")
+     * @ORM\OneToMany(targetEntity="Acme\RememberSeriesBundle\Entity\UserSeries", mappedBy="userId", cascade={"remove"}, orphanRemoval=true)
      * @Assert\Type(type="Acme\RememberSeriesBundle\Entity\Series")
      */
     private $series;
@@ -59,51 +58,33 @@ class User extends BaseUser
     public function getSeries() {
         return $this->series;
     }
-
-    /**
-     * Add series
-     *
-     * @param \Acme\RememberSeriesBundle\Entity\Series $series
-     * @return User
-     */
-    public function addSeries(\Acme\RememberSeriesBundle\Entity\Series $series)
-    {
-        $this->series[] = $series;
-
-        return $this;
-    }
-
-    /**
-     * Remove series
-     *
-     * @param \Acme\RememberSeriesBundle\Entity\Series $series
-     */
-    public function removeSeries(\Acme\RememberSeriesBundle\Entity\Series $series)
-    {
-        $this->series->removeElement($series);
-    }
-
-    /**
-     * Add series
-     *
-     * @param \Acme\RememberSeriesBundle\Entity\Series $series
-     * @return User
-     */
-    public function addSerie(\Acme\RememberSeriesBundle\Entity\Series $series)
-    {
-        $this->series[] = $series;
     
-        return $this;
-    }
-
     /**
-     * Remove series
-     *
-     * @param \Acme\RememberSeriesBundle\Entity\Series $series
+     * Get related series list
+     * 
+     * @return array_map
      */
-    public function removeSerie(\Acme\RememberSeriesBundle\Entity\Series $series)
+    public function getSeriesList() {
+        return array_map(
+            function ($series) {
+                return $series->getSeriesId();
+            },
+            $this->series->toArray()
+        );
+    }
+    
+    public function getRelatedSeries() {
+        
+    }
+   
+    /**
+     * Get createdSeries
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCreatedSeries()
     {
-        $this->series->removeElement($series);
+        return $this->createdSeries;
     }
 
     /**
@@ -112,7 +93,7 @@ class User extends BaseUser
      * @param \Acme\RememberSeriesBundle\Entity\Series $createdSeries
      * @return User
      */
-    public function addCreatedSeries(\Acme\RememberSeriesBundle\Entity\Series $createdSeries)
+    public function addCreatedSerie(\Acme\RememberSeriesBundle\Entity\Series $createdSeries)
     {
         $this->createdSeries[] = $createdSeries;
     
@@ -124,18 +105,38 @@ class User extends BaseUser
      *
      * @param \Acme\RememberSeriesBundle\Entity\Series $createdSeries
      */
-    public function removeCreatedSeries(\Acme\RememberSeriesBundle\Entity\Series $createdSeries)
+    public function removeCreatedSerie(\Acme\RememberSeriesBundle\Entity\Series $createdSeries)
     {
         $this->createdSeries->removeElement($createdSeries);
     }
 
     /**
-     * Get createdSeries
+     * Add series
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @param \Acme\RememberSeriesBundle\Entity\UserSeries $series
+     * @return User
      */
-    public function getCreatedSeries()
+    public function addSerie(\Acme\RememberSeriesBundle\Entity\UserSeries $series)
     {
-        return $this->createdSeries;
+        if (!$this->series->contains($series)) {
+            $this->series->add($series);
+            $series->setUserId($this);
+        }
+    
+        return $this;
+    }
+
+    /**
+     * Remove series
+     *
+     * @param \Acme\RememberSeriesBundle\Entity\UserSeries $series
+     */
+    public function removeSerie(\Acme\RememberSeriesBundle\Entity\UserSeries $series)
+    {
+        if ($this->series->contains($series)) {
+            $this->series->removeElement($series);
+            $series->setUserId(null);
+        }
+        return $this;
     }
 }

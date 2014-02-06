@@ -46,7 +46,7 @@ class Series
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Acme\UserBundle\Entity\User", mappedBy="series")
+     * @ORM\OneToMany(targetEntity="Acme\RememberSeriesBundle\Entity\UserSeries", mappedBy="seriesId", cascade={"remove"}, orphanRemoval=true)
      */
     private $users;
 
@@ -155,30 +155,6 @@ class Series
     }
 
     /**
-     * Add user
-     *
-     * @param \Acme\UserBundle\Entity\User $user
-     * @return Series
-     */
-    public function addUser(\Acme\UserBundle\Entity\User $user)
-    {
-        $user->addSeries($this);
-        $this->users[] = $user;
-
-        return $this;
-    }
-
-    /**
-     * Remove user
-     *
-     * @param \Acme\UserBundle\Entity\User $user
-     */
-    public function removeUser(\Acme\UserBundle\Entity\User $user)
-    {
-        $this->users->removeElement($user);
-    }
-
-    /**
      * Get user
      *
      * @return \Doctrine\Common\Collections\Collection
@@ -186,6 +162,20 @@ class Series
     public function getUsers()
     {
         return $this->users;
+    }
+    
+    /**
+     * Get related user list
+     * 
+     * @return array_map
+     */
+    public function getUsersList() {
+        return array_map(
+            function ($user) {
+                return $user->getUserId();
+            },
+            $this->users->toArray()
+        );
     }
 
     /**
@@ -209,5 +199,34 @@ class Series
     public function getOwnerId()
     {
         return $this->ownerId;
+    }
+
+    /**
+     * Add users
+     *
+     * @param \Acme\RememberSeriesBundle\Entity\UserSeries $users
+     * @return Series
+     */
+    public function addUser(\Acme\RememberSeriesBundle\Entity\UserSeries $users)
+    {
+       if (!$this->users->contains($users)) {
+            $this->users->add($users);
+            $users->setSeriesId($this);
+        }
+    
+        return $this;
+    }
+
+    /**
+     * Remove users
+     *
+     * @param \Acme\RememberSeriesBundle\Entity\UserSeries $users
+     */
+    public function removeUser(\Acme\RememberSeriesBundle\Entity\UserSeries $users)
+    {
+        if ($this->users->contains($users)) {
+            $this->users->removeElement($users);
+            $users->setSeriesId(null);
+        }
     }
 }
