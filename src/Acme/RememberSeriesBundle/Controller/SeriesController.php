@@ -14,6 +14,10 @@ use Acme\RememberSeriesBundle\Entity\UserSeries;
  * @author Alexander.Davidenko
  */
 class SeriesController extends Controller {
+    
+    public function getSecurityContext() {
+        return $this->container->get('security.context');
+    }
 
     public function seriesAction($series_id) {
         $params = array();
@@ -31,9 +35,7 @@ class SeriesController extends Controller {
     public function seriesListAction() {
         $params = array();
 
-        $securityContext = $this->container->get('security.context');
-
-        $series = $securityContext->getToken()->getUser()->getSeriesList();
+        $series = $this->getSecurityContext()->getToken()->getUser()->getSeriesList();
         
         $params['series'] = $series;
 
@@ -47,8 +49,7 @@ class SeriesController extends Controller {
     public function seriesListAllAction() {
         $params = array();
 
-        $securityContext = $this->container->get('security.context');
-        $user = $securityContext->getToken()->getUser();
+        $user = $this->getSecurityContext()->getToken()->getUser();
 
         $userSeries = $user->getSeriesList();
 
@@ -73,8 +74,7 @@ class SeriesController extends Controller {
     public function seriesAddAction($series_id) {
 
         $em = $this->getDoctrine()->getManager();
-        $securityContext = $this->container->get('security.context');
-        $user = $securityContext->getToken()->getUser();
+        $user = $this->getSecurityContext()->getToken()->getUser();
 
         $series = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:Series')
                 ->find($series_id);
@@ -121,8 +121,7 @@ class SeriesController extends Controller {
     public function seriesRemoveAction($series_id) {
 
         $em = $this->getDoctrine()->getManager();
-        $securityContext = $this->container->get('security.context');
-        $user = $securityContext->getToken()->getUser();
+        $user = $this->getSecurityContext()->getToken()->getUser();
 
         $series = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:UserSeries')
                 ->findOneBy(array('seriesId' => $series_id, 'userId' => $user->getId()));
