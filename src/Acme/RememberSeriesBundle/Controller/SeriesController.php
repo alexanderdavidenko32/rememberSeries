@@ -135,7 +135,7 @@ class SeriesController extends Controller {
     }
 
     public function seriesSetWatchedAction($series_id, $is_watched) {
-        
+
         $em = $this->getDoctrine()->getManager();
         $user = $this->getSecurityContext()->getToken()->getUser();
 
