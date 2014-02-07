@@ -14,7 +14,7 @@ use Acme\RememberSeriesBundle\Entity\UserSeries;
  * @author Alexander.Davidenko
  */
 class SeriesController extends Controller {
-    
+
     public function getSecurityContext() {
         return $this->container->get('security.context');
     }
@@ -36,7 +36,7 @@ class SeriesController extends Controller {
         $params = array();
 
         $series = $this->getSecurityContext()->getToken()->getUser()->getSeriesList();
-        
+
         $params['series'] = $series;
 
         $form = $this->createForm(new SeriesType(), new Series());
@@ -103,7 +103,7 @@ class SeriesController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $securityContext = $this->container->get('security.context');
             $user = $securityContext->getToken()->getUser();
-            
+
             $userSeries = new UserSeries();
             $userSeries->setuserId($user);
             $em->persist($userSeries);
@@ -125,10 +125,26 @@ class SeriesController extends Controller {
 
         $series = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:UserSeries')
                 ->findOneBy(array('seriesId' => $series_id, 'userId' => $user->getId()));
-        
+
         $user->removeSerie($series);
 
         $em->persist($user);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('_welcome'));
+    }
+
+    public function seriesSetWatchedAction($series_id, $is_watched) {
+        
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getSecurityContext()->getToken()->getUser();
+
+        $series = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:UserSeries')
+                ->findOneBy(array('seriesId' => $series_id, 'userId' => $user->getId()));
+
+        $series->setWatched($is_watched);
+
+        $em->persist($series);
         $em->flush();
 
         return $this->redirect($this->generateUrl('_welcome'));

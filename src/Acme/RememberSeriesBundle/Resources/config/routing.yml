@@ -34,10 +34,17 @@ acme_remember_series_season:
     pattern: /season/{season_id}
     defaults: { _controller: AcmeRememberSeriesBundle:Season:season }
     requirements:
-        series_id: \d+
+        season_id: \d+
 
 acme_remember_series_episode:
     pattern: /episode/{episode_id}
     defaults: { _controller: AcmeRememberSeriesBundle:Episode:episode }
     requirements:
+        episode_id: \d+
+        
+acme_remember_series_set_watched:
+    pattern: /series/{series_id}/watched/{is_watched}
+    defaults: { _controller: AcmeRememberSeriesBundle:Series:seriesSetWatched }
+    requirements:
         series_id: \d+
+        is_watched: \d+

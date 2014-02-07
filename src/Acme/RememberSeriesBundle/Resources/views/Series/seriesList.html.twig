@@ -17,7 +17,11 @@
         <li>
             <a href="{{ path('acme_remember_series_single_page', { 'series_id': item.id }) }}">{{ item.name }}</a>
             <a href="{{ path('acme_remember_series_remove', { 'series_id': item.id }) }}">remove</a>
-            {{ dump(attribute(item, "getUsers").first().getWatched()) }}
+            {% if attribute(item, "getUsers").first().getWatched() %}
+                <a href="{{ path('acme_remember_series_set_watched', { 'series_id': item.id, 'is_watched': 0 }) }}">set not watched</a>
+            {% else %}
+                <a href="{{ path('acme_remember_series_set_watched', { 'series_id': item.id, 'is_watched': 1 }) }}">set watched</a>
+            {% endif %}
         </li>
     {% endfor %}
     </ul>
