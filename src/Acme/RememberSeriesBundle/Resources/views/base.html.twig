@@ -3,27 +3,33 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>{% block title %}Home{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            {% stylesheets '@AcmeRememberSeriesBundle/Resources/public/scss/body.scss' filter='compass' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        {% endblock %}
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         {% block header %}
             {% if app.user %}
-                user: {{ app.user }}
-                <a href="{{ path('fos_user_security_logout') }}">logout</a>
+            user: {{ app.user }}
+            <a href="{{ path('fos_user_security_logout') }}">logout</a>
             {% else %}
-                <a href="{{ path('fos_user_security_login') }}">login</a>
+            <a href="{{ path('fos_user_security_login') }}">login</a>
             {% endif %}
         {% endblock %}
 
         {% block navigation %}
+            <div class="main-menu">
                 <ul>
                     <li><a href="{{ path('_welcome') }}">home</a></li>
                     <li><a href="{{ path('acme_remember_series_list_all') }}">all series</a></li>
                 </ul>
+            </div>
         {% endblock %}
 
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
-    </body>
-</html>
+        </body>
+    </html>
