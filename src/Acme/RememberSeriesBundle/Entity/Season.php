@@ -51,6 +51,11 @@ class Season
     private $description;
 
     /**
+     * @ORM\OneToMany(targetEntity="Acme\RememberSeriesBundle\Entity\UserSeason", mappedBy="seasonId", cascade={"remove"}, orphanRemoval=true)
+     */
+    private $users;
+    
+    /**
      * @ORM\OneToMany(targetEntity="Episode", mappedBy="season_id")
      */
     private $episodes;
@@ -124,7 +129,7 @@ class Season
      */
     public function setSeriesId($seriesId)
     {
-        $this->series_id = $seriesId;
+        $this->seriesId = $seriesId;
 
         return $this;
     }
@@ -136,7 +141,7 @@ class Season
      */
     public function getSeriesId()
     {
-        return $this->series_id;
+        return $this->seriesId;
     }
 
     /**
@@ -193,5 +198,58 @@ class Season
     public function getEpisodes()
     {
         return $this->episodes;
+    }
+
+    /**
+     * Add users
+     *
+     * @param \Acme\RememberSeriesBundle\Entity\UserSeries $users
+     * @return Series
+     */
+    public function addUser(\Acme\RememberSeriesBundle\Entity\UserSeries $users)
+    {
+       if (!$this->users->contains($users)) {
+            $this->users->add($users);
+            $users->setSeasonId($this);
+        }
+    
+        return $this;
+    }
+
+    /**
+     * Remove users
+     *
+     * @param \Acme\RememberSeriesBundle\Entity\UserSeries $users
+     */
+    public function removeUser(\Acme\RememberSeriesBundle\Entity\UserSeries $users)
+    {
+        if ($this->users->contains($users)) {
+            $this->users->removeElement($users);
+            $users->setSeasonId(null);
+        }
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+    
+    /**
+     * Get related user list
+     * 
+     * @return array_map
+     */
+    public function getUsersList() {
+        return array_map(
+            function ($user) {
+                return $user->getUserId();
+            },
+            $this->users->toArray()
+        );
     }
 }

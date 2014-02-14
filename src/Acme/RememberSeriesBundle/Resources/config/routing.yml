@@ -55,3 +55,17 @@ acme_remember_series_set_not_watched:
     requirements:
         series_id: \d+
         is_watched: \d+
+        
+acme_remember_series_set_season_watched:
+    pattern: /season/{season_id}/watched/{is_watched}
+    defaults: { _controller: AcmeRememberSeriesBundle:Season:seasonSetWatched, is_watched: 1 }
+    requirements:
+        season_id: \d+
+        is_watched: \d+
+        
+acme_remember_series_set_season_not_watched:
+    pattern: /season/{season_id}/not-watched/{is_watched}
+    defaults: { _controller: AcmeRememberSeriesBundle:Season:seasonSetWatched, is_watched: 0 }
+    requirements:
+        season_id: \d+
+        is_watched: \d+

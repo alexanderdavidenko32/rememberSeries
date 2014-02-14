@@ -29,6 +29,12 @@ class User extends BaseUser
      */
     private $series;
     
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Acme\RememberSeriesBundle\Entity\UserSeason", mappedBy="userId", cascade={"remove"}, orphanRemoval=true)
+     */
+    private $seasons;
+    
     /**
      * @ORM\OneToMany(targetEntity="Acme\RememberSeriesBundle\Entity\Series", mappedBy="ownerId")
      */
@@ -138,5 +144,59 @@ class User extends BaseUser
             $series->setUserId(null);
         }
         return $this;
+    }
+
+    /**
+     * Add seasons
+     *
+     * @param \Acme\RememberSeriesBundle\Entity\UserSeason $seasons
+     * @return User
+     */
+    public function addSeason(\Acme\RememberSeriesBundle\Entity\UserSeason $seasons)
+    {
+         if (!$this->seasons->contains($seasons)) {
+             $this->seasons->add($seasons);
+             $seasons->setUserId($this);
+        }
+    
+        return $this;
+    }
+
+    /**
+     * Remove seasons
+     *
+     * @param \Acme\RememberSeriesBundle\Entity\UserSeason $seasons
+     */
+    public function removeSeason(\Acme\RememberSeriesBundle\Entity\UserSeason $seasons)
+    {
+         if ($this->seasons->contains($seasons)) {
+             $this->seasons->removeElement($seasons);
+             $seasons->setUserId(null);
+        }
+        return $this;
+    }
+
+    /**
+     * Get seasons
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSeasons()
+    {
+        return $this->seasons;
+    }
+    
+    /**
+     * Get related seasons list
+     * 
+     * @return array_map
+     */
+    public function getSeasonsList() {
+        return array_map(
+            function ($seasons) {
+                return $seasons->getSeriesId();
+            },
+            $this->seasons->toArray()
+        );
     }
 }

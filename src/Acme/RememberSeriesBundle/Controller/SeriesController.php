@@ -78,12 +78,17 @@ class SeriesController extends Controller {
 
         $series = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:Series')
                 ->find($series_id);
+        
+        $userSeries = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:UserSeries')
+                ->findOneBy(array('seriesId' => $series_id, 'userId' => $user->getId()));
+         
+        if (!$userSeries) {
+            $userSeries = new UserSeries();
+            $userSeries->setSeriesId($series);
+            $em->persist($userSeries);
 
-        $userSeries = new UserSeries();
-        $userSeries->setSeriesId($series);
-        $em->persist($userSeries);
-
-        $user->addSerie($userSeries);
+            $user->addSerie($userSeries);
+        }
 
         $em->persist($user);
         $em->flush();

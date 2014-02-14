@@ -7,7 +7,9 @@
     <div>Description: {{ season.description }}</div>
     <ul>
     {% for item in episodes %}
-        <li><a href="{{ path('acme_remember_series_episode', { 'episode_id': item.id }) }}">{{ item.name }}</a></li>
+        <li>
+            <a href="{{ path('acme_remember_series_episode', { 'episode_id': item.id }) }}">{{ item.name }}</a>
+        </li>
     {% endfor %}
     </ul>
 {% endblock %}
