@@ -18,6 +18,11 @@ class SeasonController extends Controller {
         return $this->container->get('security.context');
     }
 
+    public function getUser() {
+        return $this->getSecurityContext()->getToken()->getUser();
+    }
+
+
     public function seasonAction($season_id) {
         $params = array();
 
@@ -35,7 +40,7 @@ class SeasonController extends Controller {
     public function seasonSetWatchedAction($season_id, $is_watched) {
 
         $em = $this->getDoctrine()->getManager();
-        $user = $this->getSecurityContext()->getToken()->getUser();
+        $user = $this->getUser();
 
         $season = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:Season')
                 ->find($season_id);

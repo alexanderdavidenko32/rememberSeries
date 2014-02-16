@@ -78,10 +78,6 @@ class User extends BaseUser
             $this->series->toArray()
         );
     }
-    
-    public function getRelatedSeries() {
-        
-    }
    
     /**
      * Get createdSeries

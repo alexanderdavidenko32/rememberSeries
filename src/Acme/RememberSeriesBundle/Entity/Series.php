@@ -52,6 +52,7 @@ class Series
 
     /**
      * @ORM\OneToMany(targetEntity="Season", mappedBy="seriesId")
+     * @ORM\OrderBy({"number"="ASC"})
      */
     private $seasons;
 

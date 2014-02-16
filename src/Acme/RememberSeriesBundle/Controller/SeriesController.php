@@ -19,15 +19,17 @@ class SeriesController extends Controller {
         return $this->container->get('security.context');
     }
 
+    public function getUser() {
+        return $this->getSecurityContext()->getToken()->getUser();
+    }
+
     public function seriesAction($series_id) {
         $params = array();
 
         $series = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:Series')
                 ->find($series_id);
-        $seasons = $series->getSeasons();
 
         $params['series'] = $series;
-        $params['seasons'] = $seasons;
 
         return $this->render('AcmeRememberSeriesBundle:Series:series.html.twig', $params);
     }
@@ -35,7 +37,7 @@ class SeriesController extends Controller {
     public function seriesListAction() {
         $params = array();
 
-        $series = $this->getSecurityContext()->getToken()->getUser()->getSeriesList();
+        $series = $this->getUser()->getSeriesList();
 
         $params['series'] = $series;
 
@@ -49,14 +51,15 @@ class SeriesController extends Controller {
     public function seriesListAllAction() {
         $params = array();
 
-        $user = $this->getSecurityContext()->getToken()->getUser();
+        $user = $this->getUser();
 
         $userSeries = $user->getSeriesList();
 
         $seriesRepository = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:Series');
         $seriesQuery = $seriesRepository->createQueryBuilder('s')
                 ->where('s.ownerId = 1 OR s.ownerId = :this_user')
-                ->setParameter('this_user', $user);
+                ->setParameter('this_user', $user)
+                ->orderBy('s.name', 'ASC');
 
         if (count($userSeries)) {
             $seriesQuery->andWhere('s.id NOT IN (:ids)')
@@ -74,7 +77,7 @@ class SeriesController extends Controller {
     public function seriesAddAction($series_id) {
 
         $em = $this->getDoctrine()->getManager();
-        $user = $this->getSecurityContext()->getToken()->getUser();
+        $user = $this->getUser();
 
         $series = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:Series')
                 ->find($series_id);
@@ -126,7 +129,7 @@ class SeriesController extends Controller {
     public function seriesRemoveAction($series_id) {
 
         $em = $this->getDoctrine()->getManager();
-        $user = $this->getSecurityContext()->getToken()->getUser();
+        $user = $this->getUser();
 
         $series = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:UserSeries')
                 ->findOneBy(array('seriesId' => $series_id, 'userId' => $user->getId()));
@@ -142,7 +145,7 @@ class SeriesController extends Controller {
     public function seriesSetWatchedAction($series_id, $is_watched) {
 
         $em = $this->getDoctrine()->getManager();
-        $user = $this->getSecurityContext()->getToken()->getUser();
+        $user = $this->getUser();
 
         $series = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:UserSeries')
                 ->findOneBy(array('seriesId' => $series_id, 'userId' => $user->getId()));

@@ -5,7 +5,7 @@
     <div>Description: {{ series.description }}</div>
      Seasons:
     <ul>
-    {% for item in seasons %}
+    {% for item in series.seasons %}
         <li>
             <a href="{{ path('acme_remember_series_season', { 'season_id': item.id }) }}">{{ item.name }}</a>
             {% if app.user in attribute(item, "getUsersList")  %}

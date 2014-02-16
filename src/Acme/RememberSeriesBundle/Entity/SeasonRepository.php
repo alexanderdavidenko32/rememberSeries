@@ -12,4 +12,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class SeasonRepository extends EntityRepository
 {
+    /**
+     * example. for now not used
+     */
+    public function getSeasonsForUser($series_id, $user) {
+
+        $seasons = $this->getEntityManager()
+            ->getRepository('AcmeRememberSeriesBundle:Season')
+            ->createQueryBuilder('season')
+            ->select('season', 'user_series')
+            ->leftJoin('season.users', 'user_series')
+            ->where('season.seriesId = :series_id')
+            ->andWhere('user_series.userId = :user OR user_series.userId IS NULL')
+            ->setParameter('series_id', $series_id)
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult()
+        ;
+        return $seasons;
+    }
 }
