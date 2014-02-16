@@ -23,6 +23,12 @@ class SeriesController extends Controller {
         return $this->getSecurityContext()->getToken()->getUser();
     }
 
+    /**
+     * Single TV Series page
+     *
+     * @param $series_id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function seriesAction($series_id) {
         $params = array();
 
@@ -34,12 +40,13 @@ class SeriesController extends Controller {
         return $this->render('AcmeRememberSeriesBundle:Series:series.html.twig', $params);
     }
 
+    /**
+     * List user's TV series
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function seriesListAction() {
         $params = array();
-
-        $series = $this->getUser()->getSeriesList();
-
-        $params['series'] = $series;
 
         $form = $this->createForm(new SeriesType(), new Series());
         $params['form'] = $form->createView();
@@ -48,6 +55,11 @@ class SeriesController extends Controller {
         return $response;
     }
 
+    /**
+     * List All series, that not added by user
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function seriesListAllAction() {
         $params = array();
 
@@ -74,6 +86,12 @@ class SeriesController extends Controller {
         return $this->render('AcmeRememberSeriesBundle:Series:seriesListAll.html.twig', $params);
     }
 
+    /**
+     * Add TV Series to user's list
+     *
+     * @param $series_id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function seriesAddAction($series_id) {
 
         $em = $this->getDoctrine()->getManager();
@@ -99,6 +117,12 @@ class SeriesController extends Controller {
         return $this->redirect($this->generateUrl('_welcome'));
     }
 
+    /**
+     * Create custom user's TV Series
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function seriesCreateAction(Request $request) {
 
         $form = $this->createForm(new SeriesType(), new Series());
@@ -126,6 +150,12 @@ class SeriesController extends Controller {
         return $this->forward('AcmeRememberSeriesBundle:Series:seriesList');
     }
 
+    /**
+     * Remove TV Series from user's list
+     *
+     * @param $series_id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function seriesRemoveAction($series_id) {
 
         $em = $this->getDoctrine()->getManager();
@@ -142,6 +172,13 @@ class SeriesController extends Controller {
         return $this->redirect($this->generateUrl('_welcome'));
     }
 
+    /**
+     * Set or unset TV Series as watched
+     *
+     * @param $series_id
+     * @param $is_watched
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function seriesSetWatchedAction($series_id, $is_watched) {
 
         $em = $this->getDoctrine()->getManager();

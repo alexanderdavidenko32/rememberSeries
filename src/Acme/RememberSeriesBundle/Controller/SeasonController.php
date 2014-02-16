@@ -23,6 +23,12 @@ class SeasonController extends Controller {
     }
 
 
+    /**
+     * Season single page
+     *
+     * @param $season_id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function seasonAction($season_id) {
         $params = array();
 
@@ -36,7 +42,14 @@ class SeasonController extends Controller {
 
         return $this->render('AcmeRememberSeriesBundle:Season:season.html.twig', $params);
     }
-    
+
+    /**
+     * Set or unset season as watched
+     *
+     * @param $season_id
+     * @param $is_watched
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function seasonSetWatchedAction($season_id, $is_watched) {
 
         $em = $this->getDoctrine()->getManager();

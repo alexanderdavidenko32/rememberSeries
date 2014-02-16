@@ -12,4 +12,25 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
+    /**
+     * example, not used
+     * @param $user
+     * @return mixed
+     */
+    public function getRelatedSeriesList($user) {
+
+        $seasons = $this->getEntityManager()
+            ->getRepository('AcmeUserBundle:User')
+            ->createQueryBuilder('user')
+            ->select('user', 'user_series', 'series')
+            ->leftJoin('user.series', 'user_series')
+            ->leftJoin('user_series.seriesId', 'series')
+            ->where('user.id = :user')
+            ->setParameter('user', $user)
+            ->orderBy('series.name', 'ASC')
+            ->getQuery()
+            ->getSingleResult()
+        ;
+        return $seasons;
+    }
 }
