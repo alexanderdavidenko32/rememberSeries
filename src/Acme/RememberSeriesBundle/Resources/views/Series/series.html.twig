@@ -5,10 +5,11 @@
     <div>Description: {{ series.description }}</div>
      Seasons:
     <ul>
-    {% for item in series.seasons %}
+    {% for item in seasons %}
         <li>
             <a href="{{ path('acme_remember_series_season', { 'season_id': item.id }) }}">{{ item.name }}</a>
-            {% if app.user in attribute(item, "getUsersList")  %}
+            {% if item.users.first() %}
+            {#% if app.user in attribute(item, "getUsersList")  %#}
                 <a href="{{ path('acme_remember_series_set_season_not_watched', { 'season_id': item.id }) }}">set not watched</a>
             {% else %}
                 <a href="{{ path('acme_remember_series_set_season_watched', { 'season_id': item.id }) }}">set watched</a>

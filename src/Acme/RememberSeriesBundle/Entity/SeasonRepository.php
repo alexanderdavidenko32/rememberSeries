@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class SeasonRepository extends EntityRepository
 {
     /**
-     * example. for now not used
+     * join user to season
      */
     public function getSeasonsForUser($series_id, $user) {
 
