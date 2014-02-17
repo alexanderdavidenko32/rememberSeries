@@ -34,12 +34,8 @@ class SeriesController extends Controller {
 
         $series = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:Series')
                 ->find($series_id);
-        
-        $seasons = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:Season')
-                ->getSeasonsForUser($series_id, $this->getUser());
 
         $params['series'] = $series;
-        $params['seasons'] = $seasons;
 
         return $this->render('AcmeRememberSeriesBundle:Series:series.html.twig', $params);
     }

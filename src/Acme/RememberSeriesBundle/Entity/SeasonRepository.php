@@ -3,6 +3,7 @@
 namespace Acme\RememberSeriesBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * SeasonRepository
@@ -23,12 +24,13 @@ class SeasonRepository extends EntityRepository
             ->select('season', 'user_series')
             ->leftJoin('season.users', 'user_series')
             ->where('season.seriesId = :series_id')
-            ->andWhere('user_series.userId = :user OR user_series.userId IS NULL')
+//            ->andWhere('user_series.userId = :user OR user_series.userId IS NULL')
             ->setParameter('series_id', $series_id)
-            ->setParameter('user', $user)
+//            ->setParameter('user', $user)
             ->getQuery()
             ->getResult()
         ;
+//        var_dump($seasons); die;
         return $seasons;
     }
 }
