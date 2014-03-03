@@ -30,6 +30,13 @@ class Episode
     private $season_id;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="number", type="integer")
+     */
+    private $number;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -42,6 +49,11 @@ class Episode
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Acme\RememberSeriesBundle\Entity\UserEpisode", mappedBy="episodeId", cascade={"remove"}, orphanRemoval=true)
+     */
+    private $users;
 
     public function __construct()
     {
@@ -125,5 +137,81 @@ class Episode
     public function getSeasonId()
     {
         return $this->season_id;
+    }
+
+    /**
+     * Add users
+     *
+     * @param \Acme\RememberSeriesBundle\Entity\UserEpisode $users
+     * @return Episode
+     */
+    public function addUser(\Acme\RememberSeriesBundle\Entity\UserEpisode $users)
+    {
+        if (!$this->users->contains($users)) {
+            $this->users->add($users);
+            $users->setEpisodeId($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove users
+     *
+     * @param \Acme\RememberSeriesBundle\Entity\UserEpisode $users
+     */
+    public function removeUser(\Acme\RememberSeriesBundle\Entity\UserEpisode $users)
+    {
+        if ($this->users->contains($users)) {
+            $this->users->removeElement($users);
+            $users->setEpisodeId(null);
+        }
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * Get related user list
+     *
+     * @return array_map
+     */
+    public function getUsersList() {
+        return array_map(
+            function ($user) {
+                return $user->getUserId();
+            },
+            $this->users->toArray()
+        );
+    }
+
+    /**
+     * Set number
+     *
+     * @param integer $number
+     * @return Episode
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+
+        return $this;
+    }
+
+    /**
+     * Get number
+     *
+     * @return integer
+     */
+    public function getNumber()
+    {
+        return $this->number;
     }
 }

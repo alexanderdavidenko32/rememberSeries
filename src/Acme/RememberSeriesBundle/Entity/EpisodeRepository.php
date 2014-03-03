@@ -3,6 +3,7 @@
 namespace Acme\RememberSeriesBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * EpisodeRepository
@@ -12,4 +13,36 @@ use Doctrine\ORM\EntityRepository;
  */
 class EpisodeRepository extends EntityRepository
 {
+    /**
+     * join user to season
+     */
+    public function getEpisodesForUser($season, $user) {
+
+        $rsm = new ResultSetMapping();
+
+        $rsm->addEntityResult('Acme\RememberSeriesBundle\Entity\Episode', 'e')
+            ->addFieldResult('e', 'id', 'id')
+            ->addFieldResult('e', 'name', 'name')
+            ->addFieldResult('e', 'number', 'number')
+            ->addFieldResult('e', 'description', 'description')
+            ->addMetaResult('e', 'season_id', 'season_id')
+            ->addJoinedEntityResult('Acme\RememberSeriesBundle\Entity\UserEpisode' , 'u_e', 'e', 'users')
+            ->addMetaResult('u_e', 'user_id', 'user_id')
+            ->addFieldResult('u_e', 'user_episode_id', 'id');
+
+        $sql = 'SELECT e.id, e.name, e.number, e.description, e.season_id, u_e.id AS user_episode_id, u_e.user_id
+                FROM Episode e
+                LEFT JOIN (
+                    SELECT ue.id, ue.user_id, ue.episode_id
+                    FROM user_episode ue
+                    WHERE ue.user_id = :user_id
+                ) AS u_e ON u_e.episode_id = e.id
+                WHERE e.season_id = :season_id';
+
+        $episodes = $this->getEntityManager()->createNativeQuery($sql, $rsm)
+            ->setParameter('season_id', $season)
+            ->setParameter('user_id', $user)
+            ->getResult();
+        return $episodes;
+    }
 }

@@ -29,11 +29,15 @@ class User extends BaseUser
      */
     private $series;
     
-    
     /**
      * @ORM\OneToMany(targetEntity="Acme\RememberSeriesBundle\Entity\UserSeason", mappedBy="userId", cascade={"remove"}, orphanRemoval=true)
      */
     private $seasons;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Acme\RememberSeriesBundle\Entity\UserEpisode", mappedBy="userId", cascade={"remove"}, orphanRemoval=true)
+     */
+    private $episodes;
     
     /**
      * @ORM\OneToMany(targetEntity="Acme\RememberSeriesBundle\Entity\Series", mappedBy="ownerId")
@@ -132,6 +136,7 @@ class User extends BaseUser
      * Remove series
      *
      * @param \Acme\RememberSeriesBundle\Entity\UserSeries $series
+     * @return User
      */
     public function removeSerie(\Acme\RememberSeriesBundle\Entity\UserSeries $series)
     {
@@ -162,6 +167,7 @@ class User extends BaseUser
      * Remove seasons
      *
      * @param \Acme\RememberSeriesBundle\Entity\UserSeason $seasons
+     * @return User
      */
     public function removeSeason(\Acme\RememberSeriesBundle\Entity\UserSeason $seasons)
     {
@@ -193,6 +199,61 @@ class User extends BaseUser
                 return $seasons->getSeriesId();
             },
             $this->seasons->toArray()
+        );
+    }
+
+    /**
+     * Add episodes
+     *
+     * @param \Acme\RememberSeriesBundle\Entity\UserEpisode $episodes
+     * @return User
+     */
+    public function addEpisode(\Acme\RememberSeriesBundle\Entity\UserEpisode $episodes)
+    {
+        if (!$this->episodes->contains($episodes)) {
+            $this->episodes->add($episodes);
+            $episodes->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove episode
+     *
+     * @param \Acme\RememberSeriesBundle\Entity\UserEpisode $episodes
+     * @return User
+     */
+    public function removeEpisode(\Acme\RememberSeriesBundle\Entity\UserEpisode $episodes)
+    {
+        if ($this->episodes->contains($episodes)) {
+            $this->episodes->removeElement($episodes);
+            $episodes->setUserId(null);
+        }
+        return $this;
+    }
+
+    /**
+     * Get seasons
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEpisodes()
+    {
+        return $this->episodes;
+    }
+
+    /**
+     * Get related seasons list
+     *
+     * @return array_map
+     */
+    public function getEpisodesList() {
+        return array_map(
+            function ($episodes) {
+                return $episodes->getSeriesId();
+            },
+            $this->$episodes->toArray()
         );
     }
 }

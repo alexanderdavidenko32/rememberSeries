@@ -34,7 +34,8 @@ class SeasonController extends Controller {
 
         $season = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:Season')
                 ->find($season_id);
-        $episodes = $season->getEpisodes();
+        $episodes = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:Episode')
+                ->getEpisodesForUser($season, $this->getUser());
 
         $params['title'] = 'season: ' . $season->getName();
         $params['season'] = $season;

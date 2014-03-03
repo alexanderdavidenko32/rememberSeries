@@ -9,6 +9,20 @@
     {% for item in episodes %}
         <li>
             <a href="{{ path('acme_remember_series_episode', { 'episode_id': item.id }) }}">{{ item.name }}</a>
+            <span>
+                status:
+                {% if item.users.first() %}
+                    <span class="watched">watched</span>
+                {% else %}
+                    <span class="not-watched">not watched</span>
+                {% endif %}
+            </span>
+
+            {% if item.users.first() %}
+                {#<a href="{{ path('acme_remember_series_set_season_not_watched', { 'season_id': item.id }) }}">set not watched</a>#}
+            {% else %}
+                {#<a href="{{ path('acme_remember_series_set_season_watched', { 'season_id': item.id }) }}">set watched</a>#}
+            {% endif %}
         </li>
     {% endfor %}
     </ul>
