@@ -16,21 +16,33 @@ class SeasonRepository extends EntityRepository
     /**
      * join user to season
      */
-    public function getSeasonsForUser($series_id, $user) {
-
-        $seasons = $this->getEntityManager()
-            ->getRepository('AcmeRememberSeriesBundle:Season')
-            ->createQueryBuilder('season')
-            ->select('season', 'user_series')
-            ->leftJoin('season.users', 'user_series')
-            ->where('season.seriesId = :series_id')
-//            ->andWhere('user_series.userId = :user OR user_series.userId IS NULL')
-            ->setParameter('series_id', $series_id)
-//            ->setParameter('user', $user)
-            ->getQuery()
-            ->getResult()
-        ;
-//        var_dump($seasons); die;
+    public function getSeasonsForUser($series, $user) {
+        
+        $rsm = new ResultSetMapping();
+        
+        $rsm->addEntityResult('Acme\RememberSeriesBundle\Entity\Season', 's')
+            ->addFieldResult('s', 'id', 'id')
+            ->addFieldResult('s', 'name', 'name')
+            ->addFieldResult('s', 'number', 'number')
+            ->addFieldResult('s', 'description', 'description')
+            ->addMetaResult('s', 'series_id', 'series_id')
+            ->addJoinedEntityResult('Acme\RememberSeriesBundle\Entity\UserSeason' , 'u_s', 's', 'users')
+            ->addMetaResult('u_s', 'user_id', 'user_id')
+            ->addFieldResult('u_s', 'user_season_id', 'id');
+        
+        $sql = 'SELECT s.id, s.name, s.number, s.description, s.series_id, u_s.id AS user_season_id, u_s.user_id     
+                FROM Season s 
+                LEFT JOIN (
+                    SELECT us.id, us.user_id, us.season_id 
+                    FROM user_season us 
+                    WHERE us.user_id = :user_id
+                ) AS u_s ON u_s.season_id = s.id
+                WHERE s.series_id = :series_id';
+        
+        $seasons = $this->getEntityManager()->createNativeQuery($sql, $rsm)
+                        ->setParameter('series_id', $series)
+                        ->setParameter('user_id', $user)
+                        ->getResult();
         return $seasons;
     }
 }
