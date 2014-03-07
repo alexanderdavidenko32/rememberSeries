@@ -4,9 +4,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>{% block title %}Home{% endblock %}</title>
         {% block stylesheets %}
-            {% stylesheets '@AcmeRememberSeriesBundle/Resources/public/scss/body.scss' filter='compass' %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
+            {% stylesheets '@bootstrap_css' '@AcmeRememberSeriesBundle/Resources/public/scss/body.scss' filter='compass, cssrewrite' %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
+        {% endblock %}
+
+        {% block javascripts %}
+            {% javascripts '@jquery' '@bootstrap_js' '@AcmeRememberSeriesBundle/Resources/public/js/script.js' %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
         {% endblock %}
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
     </head>
@@ -30,6 +36,6 @@
         {% endblock %}
 
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {#{% block javascripts %}{% endblock %}#}
         </body>
     </html>

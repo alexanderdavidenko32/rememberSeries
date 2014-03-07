@@ -1,0 +1,15 @@
+.main-menu {
+    ul {
+        li {
+            display: inline-block;
+        }
+    }
+}
+
+.watched {
+    background: mediumseagreen;
+}
+
+.not-watched {
+    background: tomato;
+}

@@ -1,0 +1,14 @@
+/* line 3, assetic_compasscjpMCo.scss */
+.main-menu ul li {
+  display: inline-block;
+}
+
+/* line 9, assetic_compasscjpMCo.scss */
+.watched {
+  background: mediumseagreen;
+}
+
+/* line 13, assetic_compasscjpMCo.scss */
+.not-watched {
+  background: tomato;
+}

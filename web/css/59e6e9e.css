@@ -1,0 +1,14 @@
+/* line 3, assetic_compasseDRi7e.scss */
+.main-menu ul li {
+  display: inline-block;
+}
+
+/* line 9, assetic_compasseDRi7e.scss */
+.watched {
+  background: mediumseagreen;
+}
+
+/* line 13, assetic_compasseDRi7e.scss */
+.not-watched {
+  background: tomato;
+}

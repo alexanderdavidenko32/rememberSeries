@@ -272,7 +272,7 @@ class ProgressHelper extends Helper
         $prevPeriod = intval($this->current / $this->redrawFreq);
 
         $this->current = $current;
-        
+
         $currPeriod = intval($this->current / $this->redrawFreq);
         if ($redraw || $prevPeriod !== $currPeriod || $this->max === $this->current) {
             $this->display();
@@ -352,7 +352,7 @@ class ProgressHelper extends Helper
         $vars    = array();
         $percent = 0;
         if ($this->max > 0) {
-            $percent = (double) $this->current / $this->max;
+            $percent = (float) $this->current / $this->max;
         }
 
         if (isset($this->formatVars['bar'])) {

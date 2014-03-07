@@ -24,9 +24,17 @@
                 {% endif %}
             </span>
             {% if item.watched %}
-                <a href="{{ path('acme_remember_series_set_not_watched', { 'series_id': item.seriesId.id }) }}">set not watched</a>
+            <a href="{{ path('acme_remember_series_set_not_watched', { 'series_id': item.seriesId.id }) }}">
+                <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="Set not watched">
+                    <span class="glyphicon glyphicon-eye-close"></span>
+                </button>
+            </a>
             {% else %}
-                <a href="{{ path('acme_remember_series_set_watched', { 'series_id': item.seriesId.id }) }}">set watched</a>
+            <a href="{{ path('acme_remember_series_set_watched', { 'series_id': item.seriesId.id }) }}">
+                <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="Set watched">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                </button>
+            </a>
             {% endif %}
         </li>
     {% endfor %}
