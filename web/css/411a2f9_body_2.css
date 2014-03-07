@@ -1,0 +1,14 @@
+/* line 3, assetic_compassgXCpmN.scss */
+.main-menu ul li {
+  display: inline-block;
+}
+
+/* line 9, assetic_compassgXCpmN.scss */
+.watched {
+  background: mediumseagreen;
+}
+
+/* line 13, assetic_compassgXCpmN.scss */
+.not-watched {
+  background: tomato;
+}

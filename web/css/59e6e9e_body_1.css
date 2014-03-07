@@ -1,0 +1,14 @@
+/* line 3, assetic_compassSoTsoR.scss */
+.main-menu ul li {
+  display: inline-block;
+}
+
+/* line 9, assetic_compassSoTsoR.scss */
+.watched {
+  background: mediumseagreen;
+}
+
+/* line 13, assetic_compassSoTsoR.scss */
+.not-watched {
+  background: tomato;
+}

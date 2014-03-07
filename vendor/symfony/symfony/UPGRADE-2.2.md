@@ -1,4 +1,4 @@
-UPGRADE FROM 2.1 to 2.2
+﻿UPGRADE FROM 2.1 to 2.2
 =======================
 
 ### TwigBridge
