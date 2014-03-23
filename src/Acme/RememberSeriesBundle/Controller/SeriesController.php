@@ -55,6 +55,10 @@ class SeriesController extends Controller {
         $form = $this->createForm(new SeriesType(), new Series());
         $params['form'] = $form->createView();
 
+        $series = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:Series')
+            ->getUserSeriesList($this->getUser());
+        $params['series'] = $series;
+
         $response = $this->render('AcmeRememberSeriesBundle:Series:seriesList.html.twig', $params);
         return $response;
     }
