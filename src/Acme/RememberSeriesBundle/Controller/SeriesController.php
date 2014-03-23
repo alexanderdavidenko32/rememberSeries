@@ -137,8 +137,7 @@ class SeriesController extends Controller {
             $series = $form->getData();
 
             $em = $this->getDoctrine()->getManager();
-            $securityContext = $this->container->get('security.context');
-            $user = $securityContext->getToken()->getUser();
+            $user = $this->getUser();
 
             $userSeries = new UserSeries();
             $userSeries->setuserId($user);

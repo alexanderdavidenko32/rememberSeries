@@ -1223,61 +1223,6 @@
         ]
     },
     {
-        "name": "twbs/bootstrap-sass",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/twbs/bootstrap-sass.git",
-            "reference": "8079dc3803d73d3db434072cb55548f76f0bd088"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/twbs/bootstrap-sass/zipball/8079dc3803d73d3db434072cb55548f76f0bd088",
-            "reference": "8079dc3803d73d3db434072cb55548f76f0bd088",
-            "shasum": ""
-        },
-        "time": "2014-02-28 07:06:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.1.x-dev"
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Thomas McDonald"
-            },
-            {
-                "name": "Tristan Harward"
-            },
-            {
-                "name": "Peter Gumeson"
-            },
-            {
-                "name": "Gleb Mazovetskiy"
-            },
-            {
-                "name": "Mark Otto"
-            },
-            {
-                "name": "Jacob Thornton"
-            }
-        ],
-        "description": "bootstrap-sass is a Sass-powered version of Bootstrap, ready to drop right into your Sass powered applications.",
-        "homepage": "http://github.com/twbs/bootstrap-sass",
-        "keywords": [
-            "bootstrap",
-            "css",
-            "sass"
-        ]
-    },
-    {
         "name": "doctrine/orm",
         "version": "2.3.5",
         "version_normalized": "2.3.5.0",
@@ -1718,6 +1663,61 @@
         "homepage": "https://github.com/Incenteev/ParameterHandler",
         "keywords": [
             "parameters management"
+        ]
+    },
+    {
+        "name": "twbs/bootstrap-sass",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/twbs/bootstrap-sass.git",
+            "reference": "5e583f0219dc6195e3fc5910e053716c06b523ea"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/twbs/bootstrap-sass/zipball/5e583f0219dc6195e3fc5910e053716c06b523ea",
+            "reference": "5e583f0219dc6195e3fc5910e053716c06b523ea",
+            "shasum": ""
+        },
+        "time": "2014-03-07 13:47:45",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.1.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Thomas McDonald"
+            },
+            {
+                "name": "Tristan Harward"
+            },
+            {
+                "name": "Peter Gumeson"
+            },
+            {
+                "name": "Gleb Mazovetskiy"
+            },
+            {
+                "name": "Mark Otto"
+            },
+            {
+                "name": "Jacob Thornton"
+            }
+        ],
+        "description": "bootstrap-sass is a Sass-powered version of Bootstrap, ready to drop right into your Sass powered applications.",
+        "homepage": "http://github.com/twbs/bootstrap-sass",
+        "keywords": [
+            "bootstrap",
+            "css",
+            "sass"
         ]
     }
 ]

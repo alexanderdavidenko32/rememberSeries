@@ -2,6 +2,7 @@
 
 namespace Acme\RememberSeriesBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -61,9 +62,9 @@ class Series
      */
     public function __construct()
     {
-        $this->seasons = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->ownerId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->seasons = new ArrayCollection();
+        $this->users = new ArrayCollection();
+        $this->ownerId = new ArrayCollection();
     }
 
     /**

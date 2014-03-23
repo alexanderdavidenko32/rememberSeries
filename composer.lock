@@ -1517,12 +1517,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap-sass.git",
-                "reference": "8079dc3803d73d3db434072cb55548f76f0bd088"
+                "reference": "5e583f0219dc6195e3fc5910e053716c06b523ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap-sass/zipball/8079dc3803d73d3db434072cb55548f76f0bd088",
-                "reference": "8079dc3803d73d3db434072cb55548f76f0bd088",
+                "url": "https://api.github.com/repos/twbs/bootstrap-sass/zipball/5e583f0219dc6195e3fc5910e053716c06b523ea",
+                "reference": "5e583f0219dc6195e3fc5910e053716c06b523ea",
                 "shasum": ""
             },
             "type": "library",
@@ -1562,7 +1562,7 @@
                 "css",
                 "sass"
             ],
-            "time": "2014-02-28 07:06:00"
+            "time": "2014-03-07 13:47:45"
         },
         {
             "name": "twig/extensions",

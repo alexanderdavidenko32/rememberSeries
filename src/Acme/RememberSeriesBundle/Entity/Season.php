@@ -2,7 +2,9 @@
 
 namespace Acme\RememberSeriesBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Season
@@ -40,6 +42,7 @@ class Season
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -57,12 +60,15 @@ class Season
     
     /**
      * @ORM\OneToMany(targetEntity="Episode", mappedBy="season_id")
+     * @Assert\Type(type="Acme\RememberSeriesBundle\Entity\Episode")
      */
     private $episodes;
 
     public function __construct()
     {
         $this->seriesId = new ArrayCollection();
+        $this->episodes = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**

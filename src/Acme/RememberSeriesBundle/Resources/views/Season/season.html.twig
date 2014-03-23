@@ -6,23 +6,45 @@
     <div>Season: {{ season.name }}!</div>
     <div>Description: {{ season.description }}</div>
     <ul>
+        {#{{ dump(form) }}#}
     {% for item in episodes %}
         <li>
             <a href="{{ path('acme_remember_series_episode', { 'episode_id': item.id }) }}">{{ item.name }}</a>
             <span>
                 status:
                 {% if item.users.first() %}
-                    <span class="watched">watched</span>
+                    {% if item.users.first().watched %}
+                        <span class="watched">watched</span>
+                    {% else %}
+                        <span class="not-watched">not watched</span>
+                    {% endif %}
                 {% else %}
                     <span class="not-watched">not watched</span>
                 {% endif %}
             </span>
 
             {% if item.users.first() %}
-                {#<a href="{{ path('acme_remember_series_set_season_not_watched', { 'season_id': item.id }) }}">set not watched</a>#}
+                {% if item.users.first().watched %}
+                    <a href="{{ path('acme_remember_series_set_episode_not_watched', { 'episode_id': item.id }) }}">set not watched</a>
+                {% else %}
+                    <a href="{{ path('acme_remember_series_set_episode_watched', { 'episode_id': item.id }) }}">set watched</a>
+                {% endif %}
+                {#{{ item.users.first().progress|date('H:i:s') }}#}
+
+
             {% else %}
-                {#<a href="{{ path('acme_remember_series_set_season_watched', { 'season_id': item.id }) }}">set watched</a>#}
+                <a href="{{ path('acme_remember_series_set_episode_watched', { 'episode_id': item.id }) }}">set watched</a>
             {% endif %}
+            <form action="{{ path('acme_remember_series_episode_set_progress') }}" method="post" {{ form_enctype(form[loop.index0]) }}>
+
+                {{ form_errors(form[loop.index0]) }}
+                {{ form_row(form[loop.index0].episodeId) }}
+                {#{{ form_row(form[loop.index0].watched) }}#}
+                {{ form_row(form[loop.index0].progress) }}
+                {{ form_row(form[loop.index0]._token) }}
+
+                <input type="submit" value="set" />
+            </form>
         </li>
     {% endfor %}
     </ul>

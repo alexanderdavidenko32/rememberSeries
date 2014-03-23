@@ -28,12 +28,14 @@ class EpisodeRepository extends EntityRepository
             ->addMetaResult('e', 'season_id', 'season_id')
             ->addJoinedEntityResult('Acme\RememberSeriesBundle\Entity\UserEpisode' , 'u_e', 'e', 'users')
             ->addMetaResult('u_e', 'user_id', 'user_id')
-            ->addFieldResult('u_e', 'user_episode_id', 'id');
+            ->addFieldResult('u_e', 'user_episode_id', 'id')
+            ->addFieldResult('u_e', 'progress', 'progress')
+            ->addFieldResult('u_e', 'watched', 'watched');
 
-        $sql = 'SELECT e.id, e.name, e.number, e.description, e.season_id, u_e.id AS user_episode_id, u_e.user_id
+        $sql = 'SELECT e.id, e.name, e.number, e.description, e.season_id, u_e.id AS user_episode_id, u_e.user_id, u_e.watched, u_e.progress
                 FROM Episode e
                 LEFT JOIN (
-                    SELECT ue.id, ue.user_id, ue.episode_id
+                    SELECT ue.id, ue.user_id, ue.episode_id, ue.watched, ue.progress
                     FROM user_episode ue
                     WHERE ue.user_id = :user_id
                 ) AS u_e ON u_e.episode_id = e.id

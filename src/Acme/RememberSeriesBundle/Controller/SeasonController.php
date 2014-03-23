@@ -2,8 +2,8 @@
 
 namespace Acme\RememberSeriesBundle\Controller;
 
-use Acme\RememberSeriesBundle\Entity\Series;
-
+use Acme\RememberSeriesBundle\Entity\UserEpisode;
+use Acme\RememberSeriesBundle\Form\UserEpisodeType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Acme\RememberSeriesBundle\Entity\UserSeason;
 
@@ -22,7 +22,6 @@ class SeasonController extends Controller {
         return $this->getSecurityContext()->getToken()->getUser();
     }
 
-
     /**
      * Season single page
      *
@@ -37,9 +36,24 @@ class SeasonController extends Controller {
         $episodes = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:Episode')
                 ->getEpisodesForUser($season, $this->getUser());
 
+        foreach ($episodes as $episode) {
+            $userEpisode = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:UserEpisode')
+                ->findOneBy(array('userId' => $this->getUser(), 'episodeId' => $episode));
+
+            if (!$userEpisode) {
+                $userEpisode = new UserEpisode();
+                $userEpisode->setUserId($this->getUser());
+                $userEpisode->setEpisodeId($episode);
+                $userEpisode->setProgress(new \DateTime('1980-01-01'));
+            }
+            $form[] = $this->createForm(new UserEpisodeType(), $userEpisode)->createView();
+        }
+
         $params['title'] = 'season: ' . $season->getName();
         $params['season'] = $season;
         $params['episodes'] = $episodes;
+        $params['form'] = $form;
+//            var_dump($form); die;
 
         return $this->render('AcmeRememberSeriesBundle:Season:season.html.twig', $params);
     }

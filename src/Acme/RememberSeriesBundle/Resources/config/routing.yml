@@ -6,6 +6,38 @@ acme_remember_series_list_all:
     pattern:  /series-list-all
     defaults: { _controller: AcmeRememberSeriesBundle:Series:seriesListAll }
 
+###############
+# episode page
+###############
+acme_remember_series_episode:
+    pattern: /episode/{episode_id}
+    defaults: { _controller: AcmeRememberSeriesBundle:Episode:episode }
+    requirements:
+        episode_id: \d+
+
+acme_remember_series_set_episode_watched:
+    pattern: /episode/{episode_id}/watched/{is_watched}
+    defaults: { _controller: AcmeRememberSeriesBundle:Episode:episodeSetWatched, is_watched: 1 }
+    requirements:
+        episode_id: \d+
+        is_watched: \d+
+
+acme_remember_series_set_episode_not_watched:
+    pattern: /episode/{episode_id}/not-watched/{is_watched}
+    defaults: { _controller: AcmeRememberSeriesBundle:Episode:episodeSetWatched, is_watched: 0 }
+    requirements:
+        episode_id: \d+
+        is_watched: \d+
+
+acme_remember_series_episode_set_progress:
+    pattern: /episode/set-progress
+    defaults: { _controller: AcmeRememberSeriesBundle:Episode:episodeSetProgress }
+    requirements:
+        _method: POST
+
+##############
+# series page
+##############
 acme_remember_series_single_page:
     pattern:  /series/{series_id}
     defaults: { _controller: AcmeRememberSeriesBundle:Series:series }
@@ -30,18 +62,6 @@ acme_remember_series_remove:
     requirements:
         series_id: \d+
 
-acme_remember_series_season:
-    pattern: /season/{season_id}
-    defaults: { _controller: AcmeRememberSeriesBundle:Season:season }
-    requirements:
-        season_id: \d+
-
-acme_remember_series_episode:
-    pattern: /episode/{episode_id}
-    defaults: { _controller: AcmeRememberSeriesBundle:Episode:episode }
-    requirements:
-        episode_id: \d+
-
 acme_remember_series_set_watched:
     pattern: /series/{series_id}/watched/{is_watched}
     defaults: { _controller: AcmeRememberSeriesBundle:Series:seriesSetWatched, is_watched: 1 }
@@ -55,7 +75,16 @@ acme_remember_series_set_not_watched:
     requirements:
         series_id: \d+
         is_watched: \d+
-        
+
+##############
+# season page
+##############
+acme_remember_series_season:
+    pattern: /season/{season_id}
+    defaults: { _controller: AcmeRememberSeriesBundle:Season:season }
+    requirements:
+        season_id: \d+
+
 acme_remember_series_set_season_watched:
     pattern: /season/{season_id}/watched/{is_watched}
     defaults: { _controller: AcmeRememberSeriesBundle:Season:seasonSetWatched, is_watched: 1 }
