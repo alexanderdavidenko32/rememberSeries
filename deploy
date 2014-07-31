@@ -1,3 +1,13 @@
+// сборка Assetic
+sudo apt-get install ruby-full build-essential
+gem install compass
+php app/console cache:clear
+php app/console assetic:dump --env=dev --no-debug
+
+// на случай проблем со сборкой Css стоит почистить папку /tmp/.sass-cahche и рядом лежащие папки с временными файлами сборки
+
+
+// настройка базы
 mysql> create database rememberSeries
 php app/console fos:user:create
 php app/console doctrine:fixtures:load --append

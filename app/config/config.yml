@@ -36,7 +36,7 @@ assetic:
     assets:
         bootstrap_css:
             inputs:
-                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/vendor/assets/stylesheets/bootstrap.scss
+                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap.scss
     #            - %kernel.root_dir%/../vendor/twbs/bootstrap/less/responsive.less
             filters:
                 - sass
@@ -45,19 +45,19 @@ assetic:
 
         bootstrap_js:
             inputs:
-                #- %kernel.root_dir%/../vendor/twbs/bootstrap-sass/vendor/assets/javascripts/bootstrap/*
-                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/vendor/assets/javascripts/bootstrap/affix.js
-                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/vendor/assets/javascripts/bootstrap/alert.js
-                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/vendor/assets/javascripts/bootstrap/button.js
-                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/vendor/assets/javascripts/bootstrap/carousel.js
-                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/vendor/assets/javascripts/bootstrap/collapse.js
-                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/vendor/assets/javascripts/bootstrap/dropdown.js
-                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/vendor/assets/javascripts/bootstrap/tab.js
-                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/vendor/assets/javascripts/bootstrap/transition.js
-                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/vendor/assets/javascripts/bootstrap/scrollspy.js
-                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/vendor/assets/javascripts/bootstrap/modal.js
-                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/vendor/assets/javascripts/bootstrap/tooltip.js
-                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/vendor/assets/javascripts/bootstrap/popover.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/assets/javascripts/bootstrap/*
+#                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/assets/javascripts/bootstrap/affix.js
+#                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/assets/javascripts/bootstrap/alert.js
+#                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/assets/javascripts/bootstrap/button.js
+#                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/assets/javascripts/bootstrap/carousel.js
+#                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/assets/javascripts/bootstrap/collapse.js
+#                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js
+#                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/assets/javascripts/bootstrap/tab.js
+#                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/assets/javascripts/bootstrap/transition.js
+#                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/assets/javascripts/bootstrap/scrollspy.js
+#                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/assets/javascripts/bootstrap/modal.js
+#                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/assets/javascripts/bootstrap/tooltip.js
+#                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/assets/javascripts/bootstrap/popover.js
             output: js/bootstrap.js
 
         jquery:
@@ -67,20 +67,20 @@ assetic:
 
         bootstrap_woff_fonts:
             inputs:
-                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/vendor/assets/fonts/bootstrap/glyphicons-halflings-regular.woff
-            output: css/bootstrap/glyphicons-halflings-regular.woff
+                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff
+            output: fonts/bootstrap/glyphicons-halflings-regular.woff
         bootstrap_ttf_fonts:
             inputs:
-                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/vendor/assets/fonts/bootstrap/glyphicons-halflings-regular.ttf
-            output: css/bootstrap/glyphicons-halflings-regular.ttf
+                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.ttf
+            output: fonts/bootstrap/glyphicons-halflings-regular.ttf
         bootstrap_eot_fonts:
             inputs:
-                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/vendor/assets/fonts/bootstrap/glyphicons-halflings-regular.eot
-            output: css/bootstrap/glyphicons-halflings-regular.eot
+                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.eot
+            output: fonts/bootstrap/glyphicons-halflings-regular.eot
         bootstrap_svg_fonts:
             inputs:
-                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/vendor/assets/fonts/bootstrap/glyphicons-halflings-regular.svg
-            output: css/bootstrap/glyphicons-halflings-regular.svg
+                - %kernel.root_dir%/../vendor/twbs/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.svg
+            output: fonts/bootstrap/glyphicons-halflings-regular.svg
 
     filters:
         cssrewrite: ~
