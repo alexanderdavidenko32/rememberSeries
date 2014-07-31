@@ -38,6 +38,12 @@ class SeriesRepository extends EntityRepository
         return $series;
     }
 
+    /**
+     * Gets Series by season
+     *
+     * @param Season $season
+     * @return \Acme\RememberSeriesBundle\Entity\Season
+     */
     public function getSeriesForSeason(\Acme\RememberSeriesBundle\Entity\Season $season) {
 
         $series = $this->getEntityManager()

@@ -9,5 +9,6 @@ php app/console assetic:dump --env=dev --no-debug
 
 // настройка базы
 mysql> create database rememberSeries
+php app/console doctrine:schema:update --force
 php app/console fos:user:create
 php app/console doctrine:fixtures:load --append

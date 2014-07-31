@@ -42,19 +42,26 @@ class LoadSeries implements FixtureInterface, ContainerAwareInterface {
             $series->setName('Lost');
             $series->setOwnerId($user);
 
-            $season = new Season();
-            $season->setNumber(1);
-            $season->setName('Lost season 1');
-            $season->setSeriesId($series);
 
-            $episode = new Episode();
-            $episode->setName('Lost episode 1');
-            $episode->setNumber(1);
-            $episode->setDescription('Lost episode 1 description');
-            $episode->setSeasonId($season);
+            for ($i = 1; $i <= 6; $i++) {
 
-            $manager->persist($episode);
-            $manager->persist($season);
+                $season = new Season();
+                $season->setNumber($i);
+                $season->setName('Lost season ' . $i);
+                $season->setSeriesId($series);
+
+                for ($j = 1; $j <= 10; $j++) {
+                    $episode = new Episode();
+                    $episode->setName('Lost episode ' . $j);
+                    $episode->setNumber($j);
+                    $episode->setDescription('Lost episode ' . $j . ' description');
+                    $episode->setSeasonId($season);
+
+                    $manager->persist($episode);
+                }
+                $manager->persist($season);
+            }
+
             $manager->persist($series);
             $manager->flush();
         }
