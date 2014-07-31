@@ -36,6 +36,11 @@ class SeasonController extends Controller {
         $episodes = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:Episode')
                 ->getEpisodesForUser($season, $this->getUser());
 
+        $series = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:Series')
+            ->getSeriesForSeason($season);
+//        var_dump($series);
+//        die;
+
         foreach ($episodes as $episode) {
             $userEpisode = $this->getDoctrine()->getRepository('AcmeRememberSeriesBundle:UserEpisode')
                 ->findOneBy(array('userId' => $this->getUser(), 'episodeId' => $episode));
@@ -50,6 +55,7 @@ class SeasonController extends Controller {
         }
 
         $params['title'] = 'season: ' . $season->getName();
+        $params['series'] = $series;
         $params['season'] = $season;
         $params['episodes'] = $episodes;
         $params['form'] = $form;

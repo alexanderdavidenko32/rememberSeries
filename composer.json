@@ -21,7 +21,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "twbs/bootstrap-sass": "dev-master",
-        "jquery/jquery": "2.1.0"
+        "jquery/jquery": "2.1.0",
+        "doctrine/doctrine-fixtures-bundle": "2.2.*"
     },
     "repositories": [
         {

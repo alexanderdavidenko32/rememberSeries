@@ -37,4 +37,18 @@ class SeriesRepository extends EntityRepository
 
         return $series;
     }
+
+    public function getSeriesForSeason(\Acme\RememberSeriesBundle\Entity\Season $season) {
+
+        $series = $this->getEntityManager()
+            ->getRepository('AcmeRememberSeriesBundle:Series')
+            ->createQueryBuilder('s')
+            ->leftJoin('Acme\RememberSeriesBundle\Entity\Season', 'season', 'WITH', 'season.seriesId = s.id')
+            ->where('season.id = :seasonId')
+            ->setParameter('seasonId', $season)
+            ->getQuery()
+            ->getSingleResult();
+        return $series;
+    }
+
 }

@@ -3,6 +3,9 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block body %}
+    <ul>
+        <li><a href="{{ path('acme_remember_series_single_page', { 'series_id': series.id }) }}">{{ series.name }}</a></li>
+    </ul>
     <div>Season: {{ season.name }}!</div>
     <div>Description: {{ season.description }}</div>
     <ul>
